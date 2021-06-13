@@ -1,0 +1,47 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "search.html"
+  },
+  "logoInfo": {
+    "title": "驱动管理",
+    "image": "../images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "常规管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "功能菜单",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "搜索页面",
+              "href": "search.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "添加项目",
+              "href": "projectList.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "添加驱动",
+              "href": "uploadFile.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
