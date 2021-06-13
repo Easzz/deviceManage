@@ -22,19 +22,25 @@
           "target": "_self",
           "child": [
             {
-              "title": "搜索页面",
+              "title": "用户管理",
               "href": "search.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
-              "title": "添加项目",
+              "title": "分类管理",
               "href": "projectList.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
-              "title": "添加驱动",
+              "title": "设备管理",
+              "href": "uploadFile.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "审核管理",
               "href": "uploadFile.html",
               "icon": "fa fa-tachometer",
               "target": "_self"

@@ -135,12 +135,12 @@
 
     layui.use(['jquery', 'layer', 'miniAdmin','miniTongji'], function () {
 
-     var loginType=  localStorage.getItem("loginType");
+     var userRole=  localStorage.getItem("userRole");
      var initUrl;
-     if (loginType=='admin'){
+     if (userRole==0){
          initUrl="../api/adminInit.json"
      }
-     if (loginType=='user'){
+     if (userRole==1){
          initUrl="../api/userInit.json"
      }
 
