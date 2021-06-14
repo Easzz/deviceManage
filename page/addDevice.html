@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>layui</title>
+    <title>添加设备</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -17,14 +17,30 @@
 <body>
 <form id="f" class="layui-form layuimini-form"  action="http://localhost:8020/project/save">
     <div class="layui-form-item">
-        <label class="layui-form-label required">项目名</label>
+        <label class="layui-form-label required">设备名称</label>
         <div class="layui-input-block">
-            <input type="text" name="projectName" lay-verify="required" lay-reqtext="项目名不能为空" placeholder="请输入项目名" value="" class="layui-input">
+            <input type="text" name="deviceName" lay-verify="required" lay-reqtext="设备名称不能为空" placeholder="请输入设备名称" value="" class="layui-input">
             <tip></tip>
         </div>
     </div>
+    <div class="layui-form-item">
 
+        <input type="hidden" id="typeName" name="typeName" />
+        <label class="layui-form-label required">类别名称</label>
+        <div class="layui-input-block">
+            <select id="type" name="typeId" lay-verify="" lay-search>
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
 
+        <label class="layui-form-label ">损毁情况</label>
+        <div class="layui-input-block">
+            <input type="text" name="damage"  value="" class="layui-input">
+            <tip></tip>
+        </div>
+    </div>
 
     <div class="layui-form-item">
         <div class="layui-input-block">
@@ -38,19 +54,62 @@
 <script src="../js/common.js"></script>
 
 <script>
+    $(function() {
+
+    })
+
     layui.use(['form'], function () {
         var form = layui.form,
             layer = layui.layer;
+
+        $.ajax({
+            url: apiUrl+'/type/list',
+            type: 'get',
+            dataType: 'json',
+            success: function(res) {
+                //方法中传入的参数data为后台获取的数据
+                var role = document.getElementById("type");
+                var data = res.data.records;
+                for (var i = 0; i < data.length; i++) {
+
+                    var id = data[i].id;
+                    var value = data[i].typeName;
+
+                    var option = document.createElement("option"); // 创建添加option属性
+                    option.setAttribute("value", id); // 给option的value添加值
+
+                    option.setAttribute("data-id", id);
+                    option.innerText = value; // 打印option对应的纯文本
+                    role.appendChild(option); //给select添加option子标签
+
+                }
+                form.render("select");
+            },
+            complete:function (c) {
+                console.log(c)
+
+            }
+        })
+
+        form.on("select", function(data) {
+
+            var typeName=$("#type option:selected").text();//获取文本
+            console.log(typeName)
+            $("#typeName").val(typeName);
+
+
+        });
 
 
 	$("#btn").on('click', function() {
 
 				        var data=$("form").serialize(); //输出字符串
-				               // console.log($("form").serializeArray()); //输出数组
+				               console.log($("form").serializeArray()); //输出数组
+        console.log(data); //输出数组
 
 					$.ajax({
-						url: apiUrl+'/project/save',
-						type: 'get',
+						url: apiUrl+'/device/save',
+						type: 'post',
 						dataType: 'json',
 						// data: JSON.stringify(data),
 						data: data,
@@ -66,7 +125,7 @@
 								// $('form')[0].reset();
 
 
-								 layer.alert("修改成功", {icon: 6}, function () {
+								 layer.alert("添加成功", {icon: 6}, function () {
 								                           // 获得frame索引
 								                           var index = parent.layer.getFrameIndex(window.name);
 								                           //关闭当前frame

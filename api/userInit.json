@@ -22,8 +22,14 @@
           "target": "_self",
           "child": [
             {
-              "title": "搜索页面",
-              "href": "search.html",
+              "title": "设备查询",
+              "href": "deviceList.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "借用管理",
+              "href": "deviceList.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             }

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>layui</title>
+    <title>用户管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -19,9 +19,9 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">项目名称</label>
+                            <label class="layui-form-label">用户名</label>
                             <div class="layui-input-inline">
-                                <input type="text" id="projectName" name="projectName" autocomplete="off" class="layui-input">
+                                <input type="text" id="username" name="username" autocomplete="off" class="layui-input">
                             </div>
                         </div>
 
@@ -51,9 +51,9 @@
 </div>
 <script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
 <script src="../js/common.js"></script>
-<script type="text/html" id="zizeng">
-    {{d.LAY_TABLE_INDEX+1}}
-</script>
+<!--<script type="text/html" id="zizeng">-->
+<!--    {{d.LAY_TABLE_INDEX+1}}-->
+<!--</script>-->
 <script>
     layui.use(['form', 'table'], function () {
         var $ = layui.jquery,
@@ -62,9 +62,19 @@
 
         table.render({
             elem: '#currentTableId',
-          	url: apiUrl+'/project/getProjectList',
-            toolbar: '#toolbarDemo',
-            defaultToolbar: ['filter', 'exports', 'print', {
+          	url: apiUrl+'/user/list',
+
+            parseData: function(res){ //res 即为原始返回的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.records //解析数据列表
+                };
+            },
+
+              toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
                 layEvent: 'LAYTABLE_TIPS',
                 icon: 'layui-icon-tips'
@@ -72,14 +82,13 @@
             cols: [[
                 // {type: "checkbox", width: 50},
                 {field: 'id',  title: 'ID'},
-                {field: 'projectName',  title: '项目名'},
+                {field: 'username',  title: '用户名'},
+                {field: 'userRole',  title: '角色'},
                 {field: 'gmtCreate',  title: '创建时间'}
-
             ]],
+            page: true, //开启分页
             limits: [10, 15, 20, 25, 50, 100],
-            limit: 15,
-            page: false,
-            skin: 'line'
+            limit: 10,
         });
 
         // 监听搜索操作
@@ -96,7 +105,7 @@
                     curr: 1
                 }
                 , where: {
-                    projectName: $("#projectName").val()
+                    username: $("#username").val()
                 }
             }, 'data');
 
@@ -109,13 +118,13 @@
         table.on('toolbar(currentTableFilter)', function (obj) {
             if (obj.event === 'add') {  // 监听添加操作
                 var index = layer.open({
-                    title: '添加项目',
+                    title: '添加分类',
                     type: 2,
                     shade: 0.2,
                     maxmin:true,
                     shadeClose: true,
                     area: ['50%', '50%'],
-                    content: 'addProject.html',
+                    content: 'addUser.html',
                 });
                 $(window).on("resize", function () {
                     layer.full(index);

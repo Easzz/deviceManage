@@ -22,26 +22,26 @@
           "target": "_self",
           "child": [
             {
+              "title": "审核管理",
+              "href": "deviceRecord.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
               "title": "用户管理",
-              "href": "search.html",
+              "href": "userList.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
               "title": "分类管理",
-              "href": "projectList.html",
+              "href": "typeList.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
               "title": "设备管理",
-              "href": "uploadFile.html",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            },
-            {
-              "title": "审核管理",
-              "href": "uploadFile.html",
+              "href": "deviceList.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             }

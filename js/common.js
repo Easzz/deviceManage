@@ -26,11 +26,11 @@ function judgeUrlPermission() {
             alert("无权访问");
             window.location.href = "login.html";
         }
-        if (url.indexOf("projectList.html") != -1) {
+        if (url.indexOf("typeList.html") != -1) {
             alert("无权访问");
             window.location.href = "login.html";
         }
-        if (url.indexOf("addProject.html") != -1) {
+        if (url.indexOf("addType.html") != -1) {
             alert("无权访问");
             window.location.href = "login.html";
         }
