@@ -29,7 +29,7 @@
             },
             {
               "title": "借用管理",
-              "href": "deviceList.html",
+              "href": "deviceRecord.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             }

@@ -10,8 +10,8 @@ var fileServerUrl="http://localhost:8888";
 //login?
 judgeLogin();
 function judgeLogin() {
-    var loginType=localStorage.getItem("loginType");
-    if (loginType==null){
+    var userRole=localStorage.getItem("userRole");
+    if (userRole==null){
         window.location.href="login.html";
     }
 
@@ -20,13 +20,13 @@ function judgeLogin() {
 judgeUrlPermission();
 function judgeUrlPermission() {
     url = window.location.pathname; /* 获取文件路径（文件地址） */
-    var loginType=localStorage.getItem("loginType");
-    if (loginType=='user') {
-        if (url.indexOf("uploadFile.html") != -1) {
+    var userRole=localStorage.getItem("userRole");
+    if (userRole==1) {
+        if (url.indexOf("userList.html") != -1) {
             alert("无权访问");
             window.location.href = "login.html";
         }
-        if (url.indexOf("typeList.html") != -1) {
+        if (url.indexOf("addUser.html") != -1) {
             alert("无权访问");
             window.location.href = "login.html";
         }
