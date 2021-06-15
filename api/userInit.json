@@ -1,7 +1,7 @@
 {
   "homeInfo": {
     "title": "首页",
-    "href": "search.html"
+    "href": "userDeviceList.html"
   },
   "logoInfo": {
     "title": "驱动管理",
@@ -23,12 +23,12 @@
           "child": [
             {
               "title": "设备查询",
-              "href": "deviceList.html",
+              "href": "userDeviceList.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
-              "title": "借用管理",
+              "title": "已借设备",
               "href": "deviceRecord.html",
               "icon": "fa fa-tachometer",
               "target": "_self"

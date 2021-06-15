@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>设备管理</title>
+    <title>审核</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -35,8 +35,8 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
-                 <button class="layui-btn layui-btn-sm layui-btn-sm data-add-btn" lay-event="userIn"> 借入 </button>
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="userOut"> 审核 </button>
+                <!-- <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button> -->
             </div>
         </script>
 
@@ -51,14 +51,10 @@
 </div>
 <script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
 <script src="../js/common.js"></script>
-<!--<script type="text/html" id="zizeng">-->
-<!--    {{d.LAY_TABLE_INDEX+1}}-->
-<!--</script>-->
 <script>
     layui.use(['form', 'table'], function () {
         var $ = layui.jquery,
             form = layui.form,
-            layer=layui.layer,
             table = layui.table;
 
 
@@ -70,8 +66,8 @@
             elem: '#currentTableId',
           	url: apiUrl+'/device/list',
             where: {
-                userId: userId ,
-                userRole:userRole
+                roleId: userRole,
+                queryType: 3
             },
 
             parseData: function(res){ //res 即为原始返回的数据
@@ -96,7 +92,7 @@
                 {field: 'typeName',  title: '分类名'},
                 {field: 'damage',  title: '损坏情况'},
                 {field: 'belong',  title: '归属'},
-                {field: 'gmtCreate',  title: '创建时间'}
+                {field: 'auditStatus',  title: '状态'}
             ]],
             page: true, //开启分页
             limits: [10, 15, 20, 25, 50, 100],
@@ -128,9 +124,9 @@
          * toolbar监听事件
          */
         table.on('toolbar(currentTableFilter)', function (obj) {
-            if (obj.event === 'add') {  // 监听添加操作
+            if (obj.event === 'userOut') {  // 监听添加操作
                 var index = layer.open({
-                    title: '添加设备',
+                    title: '审核',
                     type: 2,
                     shade: 0.2,
                     maxmin:true,
@@ -141,19 +137,8 @@
                 $(window).on("resize", function () {
                     layer.full(index);
                 });
-            } else if (obj.event === 'userIn') {  // 监听设备借入
-                layer.alert('请选择一行');
-                if(obj.length === 0) {
-                    layer.msg('请选择一行');
-                }
-                var checkStatus = table.checkStatus('currentTableId')
-                    , data = checkStatus.data;
-
-
-                layer.alert(JSON.stringify(data));
             }
         });
-
         //监听表格复选框选择
         table.on('checkbox(currentTableFilter)', function (obj) {
             console.log(obj)
