@@ -29,24 +29,6 @@ function judgeUrlPermission() {
 
 
 
-setApiUrl();
-setFileServerUrl();
-
-function getApiUrl() {
-  return   localStorage.getItem("apiUrl");
-
-}
-function getFileServerUrl() {
-    return   localStorage.getItem("fileServerUrl");
-}
-
-function setApiUrl() {
-    localStorage.setItem("apiUrl",apiUrl);
-}
-function setFileServerUrl() {
-    localStorage.setItem("fileServerUrl",fileServerUrl);
-}
-
 
 
 function getUrlParam(name) {

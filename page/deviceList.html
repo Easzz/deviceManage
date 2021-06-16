@@ -24,6 +24,14 @@
                                 <input type="text" id="deviceName" name="deviceName" autocomplete="off" class="layui-input">
                             </div>
                         </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">类别</label>
+                            <div class="layui-input-inline">
+                                <select id="type" name="typeId" lay-verify="" lay-search>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="layui-inline">
                             <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
@@ -63,8 +71,40 @@
             table = layui.table;
 
 
+
+        $.ajax({
+            url: apiUrl+'/type/list',
+            type: 'get',
+            dataType: 'json',
+            success: function(res) {
+                //方法中传入的参数data为后台获取的数据
+                var role = document.getElementById("type");
+                var data = res.data.records;
+                for (var i = 0; i < data.length; i++) {
+
+                    var id = data[i].id;
+                    var value = data[i].typeName;
+
+                    var option = document.createElement("option"); // 创建添加option属性
+                    option.setAttribute("value", id); // 给option的value添加值
+
+                    option.setAttribute("data-id", id);
+                    option.innerText = value; // 打印option对应的纯文本
+                    role.appendChild(option); //给select添加option子标签
+
+                }
+                form.render("select");
+            },
+            complete:function (c) {
+                console.log(c)
+
+            }
+        })
+
         var userId= localStorage.getItem("userId");
         var userRole=  localStorage.getItem("userRole");
+
+
 
 
         table.render({
@@ -72,7 +112,8 @@
           	url: apiUrl+'/device/list',
             where: {
                 userId: userId ,
-                userRole:userRole
+                userRole:userRole,
+                typeId: $("#type").val()
             },
 
             parseData: function(res){ //res 即为原始返回的数据

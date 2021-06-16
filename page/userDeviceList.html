@@ -24,6 +24,14 @@
                                 <input type="text" id="deviceName" name="deviceName" autocomplete="off" class="layui-input">
                             </div>
                         </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">类别</label>
+                            <div class="layui-input-inline">
+                                <select id="type" name="typeId" lay-verify="" lay-search>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="layui-inline">
                             <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
@@ -47,20 +55,51 @@
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
 
+
     </div>
 </div>
 <script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
 <script src="../js/common.js"></script>
 <script src="../js/api.js"></script>
 
-<!--<script type="text/html" id="zizeng">-->
-<!--    {{d.LAY_TABLE_INDEX+1}}-->
-<!--</script>-->
+<script type="text/html" id="zizeng">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
 <script>
     layui.use(['form', 'table'], function () {
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table;
+
+        $.ajax({
+            url: apiUrl+'/type/list',
+            type: 'get',
+            dataType: 'json',
+            success: function(res) {
+                //方法中传入的参数data为后台获取的数据
+                var role = document.getElementById("type");
+                var data = res.data.records;
+                for (var i = 0; i < data.length; i++) {
+
+                    var id = data[i].id;
+                    var value = data[i].typeName;
+
+                    var option = document.createElement("option"); // 创建添加option属性
+                    option.setAttribute("value", id); // 给option的value添加值
+
+                    option.setAttribute("data-id", id);
+                    option.innerText = value; // 打印option对应的纯文本
+                    role.appendChild(option); //给select添加option子标签
+
+                }
+                form.render("select");
+            },
+            complete:function (c) {
+                console.log(c)
+
+            }
+        })
+
 
        var userId= localStorage.getItem("userId");
         var userRole=  localStorage.getItem("userRole");
@@ -68,9 +107,9 @@
         table.render({
             elem: '#currentTableId',
           	url: apiUrl+'/device/list',
-            where: {
-                queryType: 1
-            },
+            // where: {
+            //     queryType: 1
+            // },
             parseData: function(res){ //res 即为原始返回的数据
                 return {
                     "code": res.code, //解析接口状态
@@ -87,13 +126,14 @@
                 icon: 'layui-icon-tips'
             }],
             cols: [[
-                {type: "radio", width: 50},
-                {field: 'id',  title: 'ID'},
+                {type: "checkbox", width: 50},
+                {field:'zizeng', width:80, title: '序号',templet:'#zizeng'},
                 {field: 'deviceName',  title: '设备名'},
+                {field: 'deviceNumber',  title: '资产编号'},
                 {field: 'typeName',  title: '分类名'},
                 {field: 'damage',  title: '损坏情况'},
                 {field: 'belong',  title: '归属'},
-                {field: 'gmtCreate',  title: '创建时间'}
+                {field: 'auditStatus',  title: '状态'}
             ]],
             page: true, //开启分页
             limits: [10, 15, 20, 25, 50, 100],
@@ -114,7 +154,8 @@
                     curr: 1
                 }
                 , where: {
-                    deviceName: $("#deviceName").val()
+                    deviceName: $("#deviceName").val(),
+                    typeId: $("#type").val(),
                 }
             }, 'data');
 
@@ -131,6 +172,23 @@
                 var checkStatus = table.checkStatus(obj.config.id)
                     ,data = checkStatus.data; //获取选中的数据
 
+
+                var j=[];
+                var flag=false;
+                data.forEach(function(e){
+                    if (e.auditStatus!='在库'){
+                        layer.msg("只有在库的才允许借入");
+                        console.log("123")
+                        flag=true;
+                    }
+
+                    j.push(e.id)
+                });
+            if (flag){
+                return;
+            }
+
+
                 if (data.length===0){
                     layer.alert("请选择一行");
                     return ;
@@ -142,26 +200,29 @@
                     console.log(data)
 
 
-                    var j={
+
+                    var d={
                         userId:localStorage.getItem("userId"),
-                        id:data[0].id
+                        deviceIds:j
                     };
+                    console.log(d)
+
                     $.ajax({
                         url: apiUrl+'/device/out',
                         type: 'post',
                         dataType: 'json',
-                        data: j,
+                        data: d,
                         success: function(res) {
                             console.log(res)
+                            // table.reload('currentTableId', {})
+                            // layer.close(index);
 
-                            return false;
+                            location.reload();
                         }
                     })
 
 
-                    layer.close(index);
 
-                    table.reload('currentTableId', {})
 
                     //此处请求后台程序，下方是成功后的前台处理……
                     // var index = layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true}); //0代表加载的风格，支持0-2
