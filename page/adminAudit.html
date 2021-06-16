@@ -35,7 +35,7 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="userOut"> 审核 </button>
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="audit"> 审核 </button>
                 <!-- <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button> -->
             </div>
         </script>
@@ -124,19 +124,78 @@
          * toolbar监听事件
          */
         table.on('toolbar(currentTableFilter)', function (obj) {
-            if (obj.event === 'userOut') {  // 监听添加操作
-                var index = layer.open({
-                    title: '审核',
-                    type: 2,
-                    shade: 0.2,
-                    maxmin:true,
-                    shadeClose: true,
-                    area: ['70%', '70%'],
-                    content: 'addDevice.html',
-                });
-                $(window).on("resize", function () {
-                    layer.full(index);
-                });
+            if (obj.event === 'audit') {  // 监听添加操作
+                var checkStatus = table.checkStatus(obj.config.id)
+                    ,data = checkStatus.data; //获取选中的数据
+
+                if (data.length===0){
+                    layer.alert("请选择一行");
+                    return ;
+                }
+
+               if ( data[0].auditStatus=='借出审核中'){
+                   layer.confirm('是否同意借出',{
+                       btn:['同意','不同意'],
+                       cancel:function(index, layero){
+                           console.log('关闭x号');
+                       }
+                   },function (index) {
+                       //确认
+                       console.log(11);
+                       var j={
+                           agree:1,
+                           id:data[0].id
+                       };
+                       $.ajax({
+                           url: apiUrl+'/device/outAudit',
+                           type: 'post',
+                           dataType: 'json',
+                           data: j,
+                           success: function(res) {
+                               console.log(res)
+                               return false;
+                           }
+                       })
+                       layer.close(index);
+                       table.reload('currentTableId', {})
+                   },function(index){
+                       //取消
+                       var j={
+                           agree:2,
+                           id:data[0].id
+                       };
+                       $.ajax({
+                           url: apiUrl+'/device/outAudit',
+                           type: 'post',
+                           dataType: 'json',
+                           data: j,
+                           success: function(res) {
+                               console.log(res)
+                               return false;
+                           }
+                       })
+                       layer.close(index);
+                       table.reload('currentTableId', {})
+                   });
+               }
+
+                if ( data[0].auditStatus=='归还审核中'){
+                    var index = layer.open({
+                        title: '归还审核',
+                        type: 2,
+                        shade: 0.2,
+                        maxmin:true,
+                        shadeClose: true,
+                        area: ['50%', '50%'],
+                        content: 'inAudit.html?id='+data[0].id+"&deviceName="+data[0].deviceName,
+                    });
+                    $(window).on("resize", function () {
+                        layer.full(index);
+                    });
+                }
+
+
+
             }
         });
         //监听表格复选框选择

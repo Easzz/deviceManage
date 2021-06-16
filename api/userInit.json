@@ -32,7 +32,14 @@
               "href": "deviceRecord.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
+            },
+            {
+              "title": "修改密码",
+              "href": "updatePwd.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
             }
+
 
           ]
         }

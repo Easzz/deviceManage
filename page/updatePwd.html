@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>分类管理</title>
+    <title>修改密码</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -17,27 +17,19 @@
 <body>
 <form id="f" class="layui-form layuimini-form"  action="http://localhost:8020/project/save">
     <div class="layui-form-item">
-        <label class="layui-form-label required">用户名</label>
-        <div class="layui-input-block">
-            <input type="text" name="username" lay-verify="required" lay-reqtext="用户名不能为空" placeholder="请输入用户名" value="" class="layui-input">
-            <tip></tip>
-        </div>
-        <label class="layui-form-label required">姓名</label>
-        <div class="layui-input-block">
-            <input type="text" name="realName" lay-verify="required" lay-reqtext="姓名不能为空" placeholder="请输入姓名" value="" class="layui-input">
-            <tip></tip>
-        </div>
+        <input type="hidden" name="id" id="id">
+
         <label class="layui-form-label required">密码</label>
         <div class="layui-input-block">
-            <input type="text" name="pwd" lay-verify="required" lay-reqtext="密码" placeholder="请输入密码" value="" class="layui-input">
+            <input type="text" name="pwd" lay-verify="required" lay-reqtext="密码不能为空" value="" class="layui-input">
+            <tip></tip>
+        </div>
+        <label class="layui-form-label required">确认密码</label>
+        <div class="layui-input-block">
+            <input type="text" name="confirmPwd" lay-verify="required|confirmPass" ay-reqtext="确认密码不能为空" class="layui-input">
             <tip></tip>
         </div>
 
-        <label class="layui-form-label required">确认密码</label>
-        <div class="layui-input-block">
-            <input type="text" name="confirmPwd" lay-verify="required|confirmPass" placeholder="请确认密码" lay-reqtext="确认密码不能为空" class="layui-input">
-            <tip></tip>
-        </div>
     </div>
 
     <div class="layui-form-item">
@@ -54,7 +46,10 @@
 <script>
     layui.use(['form'], function () {
         var form = layui.form,
-            layer = layui.layer;
+            layer = layui.layer,
+            $ = layui.jquery;
+
+        $("#id").val(localStorage.getItem("userId"))
 
 
 	$("#btn").on('click', function() {
@@ -68,10 +63,9 @@
 				               // console.log($("form").serializeArray()); //输出数组
 
 					$.ajax({
-						url: apiUrl+'/user/save',
+						url: apiUrl+'/user/update',
 						type: 'post',
 						dataType: 'json',
-						// data: JSON.stringify(data),
 						data: data,
 						success: function(res) {
 							console.log(res)
@@ -101,22 +95,7 @@
 					})
 				return false;
 				});
-        //监听提交
-        // form.on('submit(saveBtn)', function (data) {
-        //     var index = layer.alert(JSON.stringify(data.field), {
-        //         title: '最终的提交信息'
-        //     }, function () {
 
-        //         // 关闭弹出层
-        //         layer.close(index);
-
-        //         var iframeIndex = parent.layer.getFrameIndex(window.name);
-        //         parent.layer.close(iframeIndex);
-
-        //     });
-
-        //     return false;
-        // });
 
     });
 </script>

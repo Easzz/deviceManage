@@ -26,10 +26,7 @@ function judgeUrlPermission() {
             alert("无权访问");
             window.location.href = "login.html";
         }
-        if (url.indexOf("addUser.html") != -1) {
-            alert("无权访问");
-            window.location.href = "login.html";
-        }
+
         if (url.indexOf("addType.html") != -1) {
             alert("无权访问");
             window.location.href = "login.html";
@@ -55,4 +52,13 @@ function setApiUrl() {
 }
 function setFileServerUrl() {
     localStorage.setItem("fileServerUrl",fileServerUrl);
+}
+
+
+
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return decodeURI(r[2]);
+    return null;
 }
