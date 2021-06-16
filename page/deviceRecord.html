@@ -51,6 +51,8 @@
 </div>
 <script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
 <script src="../js/common.js"></script>
+<script src="../js/api.js"></script>
+
 <script>
     layui.use(['form', 'table'], function () {
         var $ = layui.jquery,
@@ -132,6 +134,12 @@
                     layer.alert("请选择一行");
                     return;
                 }
+                if (data[0].auditStatus=='借出审核中'){
+                    layer.msg("当前借入还未审核通过，不允许归还");
+                    return;
+                }
+
+
                 layer.confirm('确认要归还吗？', {
                     btn: ['确定', '取消']//按钮
                 }, function (index) {
