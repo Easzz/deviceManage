@@ -16,17 +16,17 @@
 </head>
 <body>
 <form id="f" class="layui-form layuimini-form"  action="http://localhost:8020/project/save">
-    <div class="layui-form-item">
+    <div class="layui-form-item layui-col-md4">
         <input type="hidden" name="id" id="id">
 
         <label class="layui-form-label required">密码</label>
-        <div class="layui-input-block">
-            <input type="text" name="pwd" lay-verify="required" lay-reqtext="密码不能为空" value="" class="layui-input">
+        <div class="layui-input-block ">
+            <input type="password" name="pwd" lay-verify="required" lay-reqtext="密码不能为空" value="" class="layui-input">
             <tip></tip>
         </div>
         <label class="layui-form-label required">确认密码</label>
         <div class="layui-input-block">
-            <input type="text" name="confirmPwd" lay-verify="required|confirmPass" ay-reqtext="确认密码不能为空" class="layui-input">
+            <input type="password" name="confirmPwd" lay-verify="required|confirmPass" ay-reqtext="确认密码不能为空" class="layui-input">
             <tip></tip>
         </div>
 

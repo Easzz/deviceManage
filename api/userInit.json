@@ -1,7 +1,7 @@
 {
   "homeInfo": {
     "title": "首页",
-    "href": "userDeviceList.html"
+    "href": "../page/userDeviceList.html"
   },
   "logoInfo": {
     "title": "设备管理",
@@ -10,7 +10,7 @@
   },
   "menuInfo": [
     {
-      "title": "常规管理",
+      "title": "物料管理",
       "icon": "fa fa-address-book",
       "href": "",
       "target": "_self",
