@@ -38,7 +38,7 @@
 		<input type="hidden" id="typeName" name="typeName"/>
 		<label class="layui-form-label required">类别名称</label>
 		<div class="layui-input-block">
-			<select id="type" name="typeId" lay-verify="" lay-search>
+			<select id="type" name="typeId" lay-verify="required" lay-search>
 				<option value=""></option>
 			</select>
 		</div>
@@ -116,6 +116,7 @@
 				$("#deviceNumber").val(res.data.deviceNumber);
 				$("#damage").val(res.data.damage);
 				$("#type").val(res.data.typeId);
+				$("#typeName").val(res.data.typeName);
 
 				layui.form.render();
 				console.log(res)
