@@ -17,9 +17,9 @@
 <body>
 <form id="f" class="layui-form layuimini-form"  action="http://localhost:8020/project/save">
     <div class="layui-form-item">
-        <label class="layui-form-label required">设备名称</label>
+        <label class="layui-form-label required">设备信息</label>
         <div class="layui-input-block">
-            <input type="text" id="deviceName" name="deviceName" style="background:#CCCCCC" lay-verify="required" readonly="true" lay-reqtext="设备名称不能为空"  value="" class="layui-input">
+            <input type="text" id="deviceName" name="deviceName" style="background:#CCCCCC" lay-verify="required" readonly="true" lay-reqtext="设备信息不能为空"  value="" class="layui-input">
             <input type="hidden" name="id" id="id">
             <input type="hidden" name="agree" id="agree" value="1">
             <tip></tip>
@@ -61,45 +61,6 @@
 
         $("#id").val(id)
         $("#deviceName").val(deviceName)
-
-
-        $.ajax({
-            url: apiUrl+'/type/list',
-            type: 'get',
-            dataType: 'json',
-            success: function(res) {
-                //方法中传入的参数data为后台获取的数据
-                var role = document.getElementById("type");
-                var data = res.data.records;
-                for (var i = 0; i < data.length; i++) {
-
-                    var id = data[i].id;
-                    var value = data[i].typeName;
-
-                    var option = document.createElement("option"); // 创建添加option属性
-                    option.setAttribute("value", id); // 给option的value添加值
-
-                    option.setAttribute("data-id", id);
-                    option.innerText = value; // 打印option对应的纯文本
-                    role.appendChild(option); //给select添加option子标签
-
-                }
-                form.render("select");
-            },
-            complete:function (c) {
-                console.log(c)
-
-            }
-        })
-
-        form.on("select", function(data) {
-
-            var typeName=$("#type option:selected").text();//获取文本
-            console.log(typeName)
-            $("#typeName").val(typeName);
-
-
-        });
 
 
 	$("#btn").on('click', function() {

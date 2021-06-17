@@ -19,7 +19,7 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">用户名</label>
+                            <label class="layui-form-label">工号</label>
                             <div class="layui-input-inline">
                                 <input type="text" id="username" name="username" autocomplete="off" class="layui-input">
                             </div>
@@ -84,10 +84,10 @@
             cols: [[
                 // {type: "checkbox", width: 50},
                 {field: 'id',  title: 'ID'},
-                {field: 'username',  title: '用户名'},
-                {field: 'realName',  title: '姓名'},
+                {field: 'username',  title: '工号'},
+                {field: 'realName',  title: '姓名'}
                 // {field: 'userRole',  title: '角色'},
-                {field: 'gmtCreate',  title: '创建时间'}
+
             ]],
             page: true, //开启分页
             limits: [10, 15, 20, 25, 50, 100],
