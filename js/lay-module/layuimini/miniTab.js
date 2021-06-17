@@ -235,6 +235,8 @@ layui.define(["element", "layer", "jquery"], function (exports) {
                     });
                 }
                 element.tabChange('layuiminiTab', tabId);
+                //点击tab刷新页面
+                $(".layui-tab-item.layui-show").find("iframe")[0].contentWindow.location.reload()
                 layer.close(loading);
             });
 

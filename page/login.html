@@ -148,6 +148,8 @@
                             }else{
                                 localStorage.setItem("userRole",res.data.role);
                                 localStorage.setItem("userId",res.data.id)
+                                localStorage.setItem("realName",res.data.realName)
+
                                 window.location = '../page/index.html';
                             }
                             return false;
