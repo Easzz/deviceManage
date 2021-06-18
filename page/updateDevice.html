@@ -54,7 +54,7 @@
 
 	<div class="layui-form-item">
 		<div class="layui-input-block">
-			<button id="btn" class="layui-btn layui-btn-normal" lay-filter="saveBtn">确认保存</button>
+			<button id="btn" class="layui-btn layui-btn-normal" lay-submit=""  lay-filter="saveBtn">确认保存</button>
 		</div>
 	</div>
 </form>
@@ -135,9 +135,14 @@
 
 		});
 
+		//
+		// $("#btn").on('click', function () {
+		//
+		//
+		// });
 
-		$("#btn").on('click', function () {
 
+		form.on('submit(saveBtn)', function (data) {
 			var data = $("form").serialize(); //输出字符串
 			console.log($("form").serializeArray()); //输出数组
 			console.log(data); //输出数组
@@ -178,6 +183,11 @@
 		});
 
 	});
+
+
+
+
+
 </script>
 </body>
 </html>

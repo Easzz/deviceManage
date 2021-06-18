@@ -26,7 +26,7 @@
 
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button id="btn" class="layui-btn layui-btn-normal" lay-filter="saveBtn">确认保存</button>
+            <button id="btn" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="saveBtn">确认保存</button>
         </div>
     </div>
 </form>
@@ -42,62 +42,51 @@
         var form = layui.form,
             layer = layui.layer;
 
-
-	$("#btn").on('click', function() {
-
-				        var data=$("form").serialize(); //输出字符串
-				               // console.log($("form").serializeArray()); //输出数组
-
-					$.ajax({
-						url: apiUrl+'/type/save',
-						type: 'post',
-						dataType: 'json',
-						// data: JSON.stringify(data),
-						data: data,
-						success: function(res) {
-							console.log(res)
-							if(res.code==1){
-
-								layer.msg(res.msg);
-								return false;
-							}
-							if(res.code==0){
-								// layer.msg("添加成功");
-								// $('form')[0].reset();
-
-
-								 layer.alert("添加成功", {icon: 6}, function () {
-								                           // 获得frame索引
-								                           var index = parent.layer.getFrameIndex(window.name);
-								                           //关闭当前frame
-								                           parent.layer.close(index);
-								                           //修改成功后刷新父界面
-								                           window.parent.location.reload();
-								                       });
-
-
-								return false;
-							}
-						}
-					})
-				return false;
-				});
+    //
+	// $("#btn").on('click', function() {
+    //
+	//
+	// 			return false;
+	// 			});
         //监听提交
-        // form.on('submit(saveBtn)', function (data) {
-        //     var index = layer.alert(JSON.stringify(data.field), {
-        //         title: '最终的提交信息'
-        //     }, function () {
+        form.on('submit(saveBtn)', function (data) {
+            var data=$("form").serialize(); //输出字符串
+            // console.log($("form").serializeArray()); //输出数组
 
-        //         // 关闭弹出层
-        //         layer.close(index);
+            $.ajax({
+                url: apiUrl+'/type/save',
+                type: 'post',
+                dataType: 'json',
+                // data: JSON.stringify(data),
+                data: data,
+                success: function(res) {
+                    console.log(res)
+                    if(res.code==1){
 
-        //         var iframeIndex = parent.layer.getFrameIndex(window.name);
-        //         parent.layer.close(iframeIndex);
+                        layer.msg(res.msg);
+                        return false;
+                    }
+                    if(res.code==0){
+                        // layer.msg("添加成功");
+                        // $('form')[0].reset();
 
-        //     });
 
-        //     return false;
-        // });
+                        layer.alert("添加成功", {icon: 6}, function () {
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                            //修改成功后刷新父界面
+                            window.parent.location.reload();
+                        });
+
+
+                        return false;
+                    }
+                }
+            })
+            return false;
+        });
 
     });
 </script>
