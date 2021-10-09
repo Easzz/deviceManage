@@ -1,281 +1,314 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>设备管理</title>
-	<meta name="renderer" content="webkit">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
-	<link rel="stylesheet" href="../css/public.css" media="all">
-</head>
-<body>
-<div class="layuimini-container">
-	<div class="layuimini-main">
 
-		<fieldset class="table-search-fieldset">
-			<legend>搜索信息</legend>
-			<div style="margin: 10px 10px 10px 10px">
-				<form class="layui-form layui-form-pane" action="">
-					<div class="layui-form-item">
-						<div class="layui-inline">
-							<label class="layui-form-label">设备信息</label>
-							<div class="layui-input-inline">
-								<input type="text" id="deviceName" name="deviceName" autocomplete="off"
-									   class="layui-input">
-							</div>
-						</div>
-						<div class="layui-inline">
-							<label class="layui-form-label">类别</label>
-							<div class="layui-input-inline">
-								<select id="type" name="typeId" lay-verify="" lay-search>
+<head>
+    <meta charset="utf-8">
+    <title>设备管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+            .layui-table-view .layui-table {
+            /* position: relative; */
+            width: 100% !important;
+            border-collapse: collapse;
+        }
+        
+        .layui-table-header {
+            margin-right: -1px !important;
+    </style>
+</head>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+
+            <fieldset class="table-search-fieldset">
+                <legend>搜索信息</legend>
+                <div style="margin: 10px 10px 10px 10px">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备信息</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="deviceName" name="deviceName" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">类别</label>
+                                <div class="layui-input-inline" style="width: 350px;">
+                                    <select id="type" name="typeId" lay-verify="" lay-search>
 									<option value=""></option>
 								</select>
-							</div>
-						</div>
+                                </div>
+                            </div>
 
-						<div class="layui-inline">
-							<button type="submit" class="layui-btn layui-btn-primary" lay-submit
-									lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
+                            <div class="layui-inline">
+                                <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
 							</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</fieldset>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
 
-		<script type="text/html" id="toolbarDemo">
-			<div class="layui-btn-container">
-				<button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>
-				<button class="layui-btn layui-btn-normal layui-btn-sm data-edit-btn" lay-event="edit"> 编辑</button>
-				<button class="layui-btn layui-btn-normal layui-btn-sm data-edit-btn" lay-event="delete"> 删除</button>
-			</div>
-		</script>
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm data-edit-btn" lay-event="edit"> 编辑</button>
+                    <button class="layui-btn layui-btn-normal layui-btn-sm data-edit-btn" lay-event="delete"> 删除</button>
+                </div>
+            </script>
 
-		<table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+            <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
-		<script type="text/html" id="currentTableBar">
-			<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
-			<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
-		</script>
+            <script type="text/html" id="currentTableBar">
+                <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+            </script>
 
-	</div>
-</div>
-<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
-<script src="../js/common.js"></script>
-<script src="../js/api.js"></script>
+        </div>
+    </div>
+    <script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/api.js"></script>
 
-<script type="text/html" id="zizeng">
-	{{d.LAY_TABLE_INDEX+1}}
-</script>
-<script>
-	layui.use(['form', 'table'], function () {
-		var $ = layui.jquery,
-			form = layui.form,
-			layer = layui.layer,
-			table = layui.table;
-
-
-		$.ajax({
-			url: apiUrl + '/type/list',
-			type: 'get',
-			dataType: 'json',
-			success: function (res) {
-				//方法中传入的参数data为后台获取的数据
-				var role = document.getElementById("type");
-				var data = res.data.records;
-				for (var i = 0; i < data.length; i++) {
-
-					var id = data[i].id;
-					var value = data[i].typeName;
-
-					var option = document.createElement("option"); // 创建添加option属性
-					option.setAttribute("value", id); // 给option的value添加值
-
-					option.setAttribute("data-id", id);
-					option.innerText = value; // 打印option对应的纯文本
-					role.appendChild(option); //给select添加option子标签
-
-				}
-				form.render("select");
-			},
-			complete: function (c) {
-				console.log(c)
-
-			}
-		})
-
-		var userId = localStorage.getItem("userId");
-		var userRole = localStorage.getItem("userRole");
+    <script type="text/html" id="zizeng">
+        {{d.LAY_TABLE_INDEX+1}}
+    </script>
+    <script>
+        layui.use(['form', 'table'], function() {
+            var $ = layui.jquery,
+                form = layui.form,
+                layer = layui.layer,
+                table = layui.table;
 
 
-		table.render({
-			elem: '#currentTableId',
-			url: apiUrl + '/device/list',
-			where: {
-				userId: userId,
-				userRole: userRole,
-				typeId: $("#type").val()
-			},
+            $.ajax({
+                url: apiUrl + '/type/list',
+                type: 'get',
+                dataType: 'json',
+                success: function(res) {
+                    //方法中传入的参数data为后台获取的数据
+                    var role = document.getElementById("type");
+                    var data = res.data.records;
+                    for (var i = 0; i < data.length; i++) {
 
-			parseData: function (res) { //res 即为原始返回的数据
-				return {
-					"code": res.code, //解析接口状态
-					"msg": res.msg, //解析提示文本
-					"count": res.data.total, //解析数据长度
-					"data": res.data.records //解析数据列表
-				};
-			},
+                        var id = data[i].id;
+                        var value = data[i].typeName;
 
-			toolbar: '#toolbarDemo',
-			defaultToolbar: ['filter', 'exports', 'print'],
-			cols: [[
-				{type: "radio", width: 50},
-				{field: 'zizeng', width: 80, title: '序号', templet: '#zizeng'},
-				{field: 'typeName', title: '分类名'},
-				{field: 'deviceNumber', title: '资产编号'},
-				{field: 'deviceName', title: '设备信息'},
-				{field: 'belong', title: '归属'},
-				{field: 'damage', title: '损坏情况'}
+                        var option = document.createElement("option"); // 创建添加option属性
+                        option.setAttribute("value", id); // 给option的value添加值
 
+                        option.setAttribute("data-id", id);
+                        option.innerText = value; // 打印option对应的纯文本
+                        role.appendChild(option); //给select添加option子标签
 
-			]],
-			page: true, //开启分页
-			limits: [10, 15, 20, 25, 50, 100],
-			limit: 10,
-		});
+                    }
+                    form.render("select");
+                },
+                complete: function(c) {
+                    console.log(c)
 
-		// 监听搜索操作
-		form.on('submit(data-search-btn)', function (data) {
-			var result = JSON.stringify(data.field);
+                }
+            })
 
-			// layer.alert(result, {
-			//     title: '最终的搜索信息'
-			// });
-
-			//执行搜索重载
-			table.reload('currentTableId', {
-				page: {
-					curr: 1
-				}
-				, where: {
-					deviceName: $("#deviceName").val(),
-					typeId: $("#type").val()
-				}
-			}, 'data');
-
-			return false;
-		});
-
-		/**
-		 * toolbar监听事件
-		 */
-		table.on('toolbar(currentTableFilter)', function (obj) {
-			var checkStatus = table.checkStatus('currentTableId')
-				, data = checkStatus.data;
+            var userId = localStorage.getItem("userId");
+            var userRole = localStorage.getItem("userRole");
 
 
-			if (obj.event === 'add') {  // 监听添加操作
-				var index = layer.open({
-					title: '添加设备',
-					type: 2,
-					shade: 0.2,
-					maxmin: true,
-					shadeClose: true,
-					area: ['70%', '70%'],
-					content: 'addDevice.html',
-				});
-				$(window).on("resize", function () {
-					layer.full(index);
-				});
-			}
-			if (obj.event === 'edit') {  //
-				if (data.length === 0) {
-					layer.msg('请选择一行');
-					return false;
-				}
-				if (data[0].belong != '在库') {
-					layer.msg('只有在库的可以修改');
-					return false;
-				}
+            table.render({
+                elem: '#currentTableId',
+                url: apiUrl + '/device/list',
+                where: {
+                    userId: userId,
+                    userRole: userRole,
+                    typeId: $("#type").val()
+                },
 
-				var index = layer.open({
-					title: '设备修改',
-					type: 2,
-					shade: 0.2,
-					maxmin:true,
-					shadeClose: true,
-					area: ['70%', '50%'],
-					content: 'updateDevice.html?id='+data[0].id
+                parseData: function(res) { //res 即为原始返回的数据
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.records //解析数据列表
+                    };
+                },
 
-				});
-				$(window).on("resize", function () {
-					layer.full(index);
-				});
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print'],
+                cols: [
+                    [{
+                            type: "radio",
+                            width: '3%'
+                        }, {
+                            field: 'zizeng',
+                            width: '5%',
+                            title: '序号',
+                            templet: '#zizeng'
+                        }, {
+                            field: 'typeName',
+                            width: '18%',
+                            title: '分类名'
+                        }, {
+                            field: 'deviceNumber',
+                            width: '16%',
+                            title: '资产编号'
+                        }, {
+                            field: 'deviceName',
+                            width: '36%',
+                            title: '设备信息'
+                        }, {
+                            field: 'belong',
+                            width: '10%',
+                            title: '归属'
+                        }, {
+                            field: 'damage',
+                            width: '12%',
+                            title: '损坏情况'
+                        }
 
 
-			}
-			if (obj.event === 'delete') {  //
-				if (data.length === 0) {
-					layer.msg('请选择一行');
-					return false;
-				}
+                    ]
+                ],
+                page: true, //开启分页
+                limits: [10, 15, 20, 25, 50, 100],
+                limit: 10,
+            });
 
-				if (data[0].belong != '在库') {
-					layer.msg('只有在库的可以删除');
-					return false;
-				}
+            // 监听搜索操作
+            form.on('submit(data-search-btn)', function(data) {
+                var result = JSON.stringify(data.field);
 
-				var j={};
-				j.id=data[0].id;
-				layer.confirm('确定要删除吗', function (index) {
-					$.ajax({
-						url: apiUrl+'/device/delete',
-						type: 'post',
-						dataType: 'json',
-						data: j,
-						success: function(res) {
-							location.reload();
-						}
-					})
-				});
+                // layer.alert(result, {
+                //     title: '最终的搜索信息'
+                // });
 
-			}
+                //执行搜索重载
+                table.reload('currentTableId', {
+                    page: {
+                        curr: 1
+                    },
+                    where: {
+                        deviceName: $("#deviceName").val(),typeId: $("#type").val()
+                    }
+                }, 'data');
 
-		});
+                return false;
+            });
 
-		//监听表格复选框选择
-		table.on('checkbox(currentTableFilter)', function (obj) {
-			console.log(obj)
-		});
+            /**
+             * toolbar监听事件
+             */
+            table.on('toolbar(currentTableFilter)', function(obj) {
+                var checkStatus = table.checkStatus('currentTableId'),
+                    data = checkStatus.data;
 
-		table.on('tool(currentTableFilter)', function (obj) {
-			var data = obj.data;
-			if (obj.event === 'edit') {
 
-				var index = layer.open({
-					title: '编辑用户',
-					type: 2,
-					shade: 0.2,
-					maxmin: true,
-					shadeClose: true,
-					area: ['100%', '100%'],
-					content: '../page/table/edit.html',
-				});
-				$(window).on("resize", function () {
-					layer.full(index);
-				});
-				return false;
-			} else if (obj.event === 'delete') {
-				layer.confirm('真的删除行么', function (index) {
-					obj.del();
-					layer.close(index);
-				});
-			}
-		});
+                if (obj.event === 'add') { // 监听添加操作
+                    var index = layer.open({
+                        title: '添加设备',
+                        type: 2,
+                        shade: 0.2,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['70%', '70%'],
+                        content: 'addDevice.html',
+                    });
+                    $(window).on("resize", function() {
+                        layer.full(index);
+                    });
+                }
+                if (obj.event === 'edit') { //
+                    if (data.length === 0) {
+                        layer.msg('请选择一行');
+                        return false;
+                    }
+                    if (data[0].belong != '在库') {
+                        layer.msg('只有在库的可以修改');
+                        return false;
+                    }
 
-	});
-</script>
+                    var index = layer.open({
+                        title: '设备修改',
+                        type: 2,
+                        shade: 0.2,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['70%', '50%'],
+                        content: 'updateDevice.html?id=' + data[0].id
+
+                    });
+                    $(window).on("resize", function() {
+                        layer.full(index);
+                    });
+
+
+                }
+                if (obj.event === 'delete') { //
+                    if (data.length === 0) {
+                        layer.msg('请选择一行');
+                        return false;
+                    }
+
+                    if (data[0].belong != '在库') {
+                        layer.msg('只有在库的可以删除');
+                        return false;
+                    }
+
+                    var j = {};
+                    j.id = data[0].id;
+                    layer.confirm('确定要删除吗', function(index) {
+                        $.ajax({
+                            url: apiUrl + '/device/delete',
+                            type: 'post',
+                            dataType: 'json',
+                            data: j,
+                            success: function(res) {
+                                location.reload();
+                            }
+                        })
+                    });
+
+                }
+
+            });
+
+            //监听表格复选框选择
+            table.on('checkbox(currentTableFilter)', function(obj) {
+                console.log(obj)
+            });
+
+            table.on('tool(currentTableFilter)', function(obj) {
+                var data = obj.data;
+                if (obj.event === 'edit') {
+
+                    var index = layer.open({
+                        title: '编辑用户',
+                        type: 2,
+                        shade: 0.2,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['100%', '100%'],
+                        content: '../page/table/edit.html',
+                    });
+                    $(window).on("resize", function() {
+                        layer.full(index);
+                    });
+                    return false;
+                } else if (obj.event === 'delete') {
+                    layer.confirm('真的删除行么', function(index) {
+                        obj.del();
+                        layer.close(index);
+                    });
+                }
+            });
+
+        });
+    </script>
 
 </body>
+
 </html>

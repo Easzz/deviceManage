@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>已借设备</title>
@@ -8,258 +9,297 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
     <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+            .layui-table-view .layui-table {
+            /* position: relative; */
+            width: 100% !important;
+            border-collapse: collapse;
+        }
+        
+        .layui-table-header {
+            margin-right: -1px !important;
+    </style>
 </head>
+
 <body>
-<div class="layuimini-container">
-    <div class="layuimini-main">
+    <div class="layuimini-container">
+        <div class="layuimini-main">
 
-        <fieldset class="table-search-fieldset">
-            <legend>搜索信息</legend>
-            <div style="margin: 10px 10px 10px 10px">
-                <form class="layui-form layui-form-pane" action="">
-                    <div class="layui-form-item">
+            <fieldset class="table-search-fieldset">
+                <legend>搜索信息</legend>
+                <div style="margin: 10px 10px 10px 10px">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
 
-                        <div class="layui-inline">
-                            <label class="layui-form-label">类别</label>
-                            <div class="layui-input-inline">
-                                <select id="type" name="typeId" lay-verify="" lay-search>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">类别</label>
+                                <div class="layui-input-inline">
+                                    <select id="type" name="typeId" lay-verify="" lay-search>
                                     <option value=""></option>
                                 </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline">
+                                <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
                             </div>
                         </div>
+                    </form>
+                </div>
+            </fieldset>
 
-                        <div class="layui-inline">
-                            <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </fieldset>
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="userOut"> 归还 </button>
+                    <!-- <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button> -->
+                </div>
+            </script>
 
-        <script type="text/html" id="toolbarDemo">
-            <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="userOut"> 归还 </button>
-                <!-- <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button> -->
-            </div>
-        </script>
+            <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
-        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+            <script type="text/html" id="currentTableBar">
+                <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+            </script>
 
-        <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
-            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
-        </script>
-
+        </div>
     </div>
-</div>
-<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
-<script src="../js/common.js"></script>
-<script src="../js/api.js"></script>
+    <script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/api.js"></script>
 
 
-<script type="text/html" id="zizeng">
-    {{d.LAY_TABLE_INDEX+1}}
-</script>
-<script>
-    layui.use(['form', 'table'], function () {
-        var $ = layui.jquery,
-            form = layui.form,
-            table = layui.table;
+    <script type="text/html" id="zizeng">
+        {{d.LAY_TABLE_INDEX+1}}
+    </script>
+    <script>
+        layui.use(['form', 'table'], function() {
+            var $ = layui.jquery,
+                form = layui.form,
+                table = layui.table;
 
 
 
-        $.ajax({
-            url: apiUrl+'/type/list',
-            type: 'get',
-            dataType: 'json',
-            success: function(res) {
-                //方法中传入的参数data为后台获取的数据
-                var role = document.getElementById("type");
-                var data = res.data.records;
-                for (var i = 0; i < data.length; i++) {
+            $.ajax({
+                url: apiUrl + '/type/list',
+                type: 'get',
+                dataType: 'json',
+                success: function(res) {
+                    //方法中传入的参数data为后台获取的数据
+                    var role = document.getElementById("type");
+                    var data = res.data.records;
+                    for (var i = 0; i < data.length; i++) {
 
-                    var id = data[i].id;
-                    var value = data[i].typeName;
+                        var id = data[i].id;
+                        var value = data[i].typeName;
 
-                    var option = document.createElement("option"); // 创建添加option属性
-                    option.setAttribute("value", id); // 给option的value添加值
+                        var option = document.createElement("option"); // 创建添加option属性
+                        option.setAttribute("value", id); // 给option的value添加值
 
-                    option.setAttribute("data-id", id);
-                    option.innerText = value; // 打印option对应的纯文本
-                    role.appendChild(option); //给select添加option子标签
+                        option.setAttribute("data-id", id);
+                        option.innerText = value; // 打印option对应的纯文本
+                        role.appendChild(option); //给select添加option子标签
 
-                }
-                form.render("select");
-            },
-            complete:function (c) {
-                console.log(c)
-
-            }
-        })
-
-        var userId= localStorage.getItem("userId");
-        var userRole=  localStorage.getItem("userRole");
-
-
-        table.render({
-            elem: '#currentTableId',
-          	url: apiUrl+'/deviceRecord/list',
-            where: {
-                userId: userId,
-                showType:1
-                // agree:1
-            },
-
-            parseData: function(res){ //res 即为原始返回的数据
-                return {
-                    "code": res.code, //解析接口状态
-                    "msg": res.msg, //解析提示文本
-                    "count": res.data.total, //解析数据长度
-                    "data": res.data.records //解析数据列表
-                };
-            },
-
-              toolbar: '#toolbarDemo',
-                defaultToolbar: ['filter', 'exports', 'print'],
-            cols: [[
-                {type: "checkbox", width: 50},
-                {field:'zizeng', width:80, title: '序号',templet:'#zizeng'},
-                {field: 'typeName',  title: '分类'},
-                {field: 'deviceNumber',  title: '资产编号'},
-                {field: 'deviceName',  title: '设备信息'},
-                {field: 'type',  title: '状态'},
-                {field: 'realName',  title: '用户'}
-            ]],
-            page: true, //开启分页
-            limits: [10, 15, 20, 25, 50, 100],
-            limit: 10,
-        });
-
-        // 监听搜索操作
-        form.on('submit(data-search-btn)', function (data) {
-            var result = JSON.stringify(data.field);
-
-            // layer.alert(result, {
-            //     title: '最终的搜索信息'
-            // });
-
-            //执行搜索重载
-            table.reload('currentTableId', {
-                page: {
-                    curr: 1
-                }
-                , where: {
-                    deviceName: $("#deviceName").val(),
-                    typeId: $("#type").val(),
-                    userId: userId,
-                    roleId: userRole,
-                    queryType: 2,
-                    type:'已借出',
-                    agree:1
-                },
-            }, 'data');
-
-            return false;
-        });
-
-        /**
-         * toolbar监听事件
-         */
-        table.on('toolbar(currentTableFilter)', function (obj) {
-            if (obj.event === 'userOut') {  // 监听添加操作
-                var checkStatus = table.checkStatus(obj.config.id)
-                    , data = checkStatus.data; //获取选中的数据
-                if (data.length === 0) {
-                    layer.alert("请选择一行");
-                    return;
-                }
-
-                var j=[];
-                var flag=false;
-                data.forEach(function(e){
-                    if (e.type!='已借出'){
-                        layer.msg("只有已借出的才能归还");
-                        console.log("123")
-                        flag=true;
                     }
-                    j.push(e.id)
-                });
+                    form.render("select");
+                },
+                complete: function(c) {
+                    console.log(c)
 
-                if (flag){
-                    return;
                 }
+            })
+
+            var userId = localStorage.getItem("userId");
+            var userRole = localStorage.getItem("userRole");
 
 
-                var d={
-                    userId:localStorage.getItem("userId"),
-                    recordIds:j
-                };
+            table.render({
+                elem: '#currentTableId',
+                url: apiUrl + '/deviceRecord/list',
+                where: {
+                    userId: userId,
+                    showType: 1
+                        // agree:1
+                },
 
-                // if (data[0].auditStatus=='借出审核中'){
-                //     layer.msg("当前借入还未审核通过，不允许归还");
-                //     return;
-                // }
+                parseData: function(res) { //res 即为原始返回的数据
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.records //解析数据列表
+                    };
+                },
 
-                layer.confirm('确认要归还吗？', {
-                    btn: ['确定', '取消']//按钮
-                }, function (index) {
-                    console.log(data)
-                    $.ajax({
-                        url: apiUrl + '/device/in',
-                        type: 'post',
-                        dataType: 'json',
-                        data: d,
-                        success: function (res) {
-                            console.log(res)
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'exports', 'print'],
+                cols: [
+                    [{
+                        type: "checkbox",
+                        width: '3%'
+                    }, {
+                        field: 'zizeng',
+                        width: '5%',
+                        title: '序号',
+                        templet: '#zizeng'
+                    }, {
+                        field: 'typeName',
+                        width: '10%',
+                        title: '分类'
+                    }, {
+                        field: 'deviceNumber',
+                        width: '13%',
+                        title: '资产编号'
+                    }, {
+                        field: 'deviceName',
+                        width: '36%',
+                        title: '设备信息'
+                    }, {
+                        field: 'type',
+                        width: '10%',
+                        title: '状态'
+                    }, {
+                        field: 'realName',
+                        width: '12%',
+                        title: '用户'
+                    }, {
+                        field: 'remark',
+                        width: '10%',
+                        title: '备注'
+                    }
+                    ]
+                ],
+                page: true, //开启分页
+                limits: [10, 15, 20, 25, 50, 100],
+                limit: 10,
+            });
 
-                            location.reload();
+            // 监听搜索操作
+            form.on('submit(data-search-btn)', function(data) {
+                var result = JSON.stringify(data.field);
 
-                            // table.reload('currentTableId', {})
-                            // layer.close(index);
+                // layer.alert(result, {
+                //     title: '最终的搜索信息'
+                // });
 
-                        }
-                    })
+                //执行搜索重载
+                table.reload('currentTableId', {
+                    page: {
+                        curr: 1
+                    },
+                    where: {
+                        deviceName: $("#deviceName").val(),
+                        typeId: $("#type").val(),
+                        userId: userId,
+                        roleId: userRole,
+                        queryType: 2,
+                        type: '已借出',
+                        agree: 1
+                    },
+                }, 'data');
 
-
-
-                    //此处请求后台程序，下方是成功后的前台处理……
-                    // var index = layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true}); //0代表加载的风格，支持0-2
-
-                });
-            }
-        });
-        //监听表格复选框选择
-        table.on('checkbox(currentTableFilter)', function (obj) {
-            console.log(obj)
-        });
-
-        table.on('tool(currentTableFilter)', function (obj) {
-            var data = obj.data;
-            if (obj.event === 'edit') {
-
-                var index = layer.open({
-                    title: '编辑用户',
-                    type: 2,
-                    shade: 0.2,
-                    maxmin:true,
-                    shadeClose: true,
-                    area: ['100%', '100%'],
-                    content: '../page/table/edit.html',
-                });
-                $(window).on("resize", function () {
-                    layer.full(index);
-                });
                 return false;
-            } else if (obj.event === 'delete') {
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
-                });
-            }
-        });
+            });
 
-    });
-</script>
+            /**
+             * toolbar监听事件
+             */
+            table.on('toolbar(currentTableFilter)', function(obj) {
+                if (obj.event === 'userOut') { // 监听添加操作
+                    var checkStatus = table.checkStatus(obj.config.id),
+                        data = checkStatus.data; //获取选中的数据
+                    if (data.length === 0) {
+                        layer.alert("请选择一行");
+                        return;
+                    }
+
+                    var j = [];
+                    var flag = false;
+                    data.forEach(function(e) {
+                        if (e.type != '已借出') {
+                            layer.msg("只有已借出的才能归还");
+                            console.log("123")
+                            flag = true;
+                        }
+                        j.push(e.id)
+                    });
+
+                    if (flag) {
+                        return;
+                    }
+
+
+                    var d = {
+                        userId: localStorage.getItem("userId"),
+                        recordIds: j
+                    };
+
+                    // if (data[0].auditStatus=='借出审核中'){
+                    //     layer.msg("当前借入还未审核通过，不允许归还");
+                    //     return;
+                    // }
+
+                    layer.confirm('确认要归还吗？', {
+                        btn: ['确定', '取消'] //按钮
+                    }, function(index) {
+                        console.log(data)
+                        $.ajax({
+                            url: apiUrl + '/device/in',
+                            type: 'post',
+                            dataType: 'json',
+                            data: d,
+                            success: function(res) {
+                                console.log(res)
+
+                                location.reload();
+
+                                // table.reload('currentTableId', {})
+                                // layer.close(index);
+
+                            }
+                        })
+
+
+
+                        //此处请求后台程序，下方是成功后的前台处理……
+                        // var index = layer.load(0,{shade: [0.7, '#393D49']}, {shadeClose: true}); //0代表加载的风格，支持0-2
+
+                    });
+                }
+            });
+            //监听表格复选框选择
+            table.on('checkbox(currentTableFilter)', function(obj) {
+                console.log(obj)
+            });
+
+            table.on('tool(currentTableFilter)', function(obj) {
+                var data = obj.data;
+                if (obj.event === 'edit') {
+
+                    var index = layer.open({
+                        title: '编辑用户',
+                        type: 2,
+                        shade: 0.2,
+                        maxmin: true,
+                        shadeClose: true,
+                        area: ['100%', '100%'],
+                        content: '../page/table/edit.html',
+                    });
+                    $(window).on("resize", function() {
+                        layer.full(index);
+                    });
+                    return false;
+                } else if (obj.event === 'delete') {
+                    layer.confirm('真的删除行么', function(index) {
+                        obj.del();
+                        layer.close(index);
+                    });
+                }
+            });
+
+        });
+    </script>
 
 </body>
+
 </html>
