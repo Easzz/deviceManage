@@ -4,45 +4,45 @@
     "href": "../page/deviceList.html"
   },
   "logoInfo": {
-    "title": "物料管理",
+    "title": "设备管理",
     "image": "../images/logo.png",
     "href": ""
   },
   "menuInfo": [
     {
-      "title": "物料管理",
-      "icon": "fa fa-address-book",
+      "title": "设备管理",
+      "icon": "",
       "href": "",
       "target": "_self",
       "child": [
         {
           "title": "功能菜单",
           "href": "",
-          "icon": "fa fa-home",
+          "icon": "",
           "target": "_self",
           "child": [
             {
               "title": "设备管理",
               "href": "deviceList.html",
-              "icon": "fa fa-tachometer",
+              "icon": "",
               "target": "_self"
             },
             {
               "title": "审核管理",
               "href": "adminAudit.html",
-              "icon": "fa fa-tachometer",
+              "icon": "",
               "target": "_self"
             },
             {
               "title": "用户管理",
               "href": "userList.html",
-              "icon": "fa fa-tachometer",
+              "icon": "",
               "target": "_self"
             },
             {
               "title": "分类管理",
               "href": "typeList.html",
-              "icon": "fa fa-tachometer",
+              "icon": "",
               "target": "_self"
             }
 

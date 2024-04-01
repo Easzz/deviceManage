@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>分类管理</title>
@@ -10,106 +11,162 @@
     <link rel="stylesheet" href="../css/public.css" media="all">
     <style>
         body {
-            background-color: #ffffff;
+            /* background-color: #ffffff; */
+            background-color: transparent;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .layui-form {
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            background: none;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            overflow: hidden;
+            width: 450px;
+            /* position: relative; */
+            /* float: left; */
+            background-color: transparent;
+            border: 0.4px solid rgba(0, 0, 0, .1);
+            /* border: 0.4px solid white; */
+            border-radius: 24px;
+            padding: 34px 60px 10px 0px;
+        }
+        
+        .layui-form-item input {
+            background: none;
+            /* margin-left: -8px; */
+            margin-bottom: 15px;
+            border: none;
+            outline: none;
+            display: inline-block;
+            border-radius: 24px;
+            padding-left: 10px;
+            /* color: white !important; */
+            font-size: 14px;
+            letter-spacing: 0;
+            transition: all 0.5s;
+            box-shadow: inset 1px 1px #c4c3c3, 1px 1px #c4c3c3;
+        }
+        
+        .layui-form-item input:focus {
+            border: 1px solid #1E9FFF !important;
+        }
+        
+        .layuimini-form>.layui-form-item>.layui-form-label {
+            width: 100px !important;
         }
     </style>
 </head>
+
 <body>
-<form id="f" class="layui-form layuimini-form"  action="http://localhost:8020/project/save">
-    <div class="layui-form-item">
-        <label class="layui-form-label required">工号</label>
-        <div class="layui-input-block">
-            <input type="text" name="username" lay-verify="required" lay-reqtext="工号不能为空" placeholder="请输入工号" value="" class="layui-input">
-            <tip></tip>
+    <form id="f" class="layui-form layuimini-form" action="http://localhost:8020/project/save">
+        <div class="layui-form-item" style="background-color: transparent;">
+            <label class="layui-form-label required">工号</label>
+            <div class="layui-input-block">
+                <input type="text" name="username" lay-verify="required" lay-reqtext="工号不能为空" placeholder="请输入工号:zwznxxxx " value="" class="layui-input">
+                <tip></tip>
+            </div>
+            <label class="layui-form-label required">姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="realName" lay-verify="required" lay-reqtext="姓名不能为空" placeholder="请输入姓名" value="" class="layui-input">
+                <tip></tip>
+            </div>
+            <label class="layui-form-label required">密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="pwd" lay-verify="required" lay-reqtext="密码" placeholder="请输入密码" value="" class="layui-input">
+                <tip></tip>
+            </div>
+
+            <label class="layui-form-label required">确认密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="confirmPwd" lay-verify="required|confirmPass" placeholder="请确认密码" lay-reqtext="确认密码不能为空" class="layui-input">
+                <tip></tip>
+            </div>
         </div>
-        <label class="layui-form-label required">姓名</label>
-        <div class="layui-input-block">
-            <input type="text" name="realName" lay-verify="required" lay-reqtext="姓名不能为空" placeholder="请输入姓名" value="" class="layui-input">
-            <tip></tip>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button id="btn" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="saveBtn" style="border-radius: 24px;">确认保存</button>
+            </div>
         </div>
-        <label class="layui-form-label required">密码</label>
-        <div class="layui-input-block">
-            <input type="password" name="pwd" lay-verify="required" lay-reqtext="密码" placeholder="请输入密码" value="" class="layui-input">
-            <tip></tip>
-        </div>
-
-        <label class="layui-form-label required">确认密码</label>
-        <div class="layui-input-block">
-            <input type="password" name="confirmPwd" lay-verify="required|confirmPass" placeholder="请确认密码" lay-reqtext="确认密码不能为空" class="layui-input">
-            <tip></tip>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button id="btn" class="layui-btn layui-btn-normal" lay-submit=""  lay-filter="saveBtn">确认保存</button>
-        </div>
-    </div>
-</form>
-<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
-<script src="../js/jquery-3.5.1.min.js" charset="utf-8"></script>
-<script src="../js/lay-config.js"></script>
-<script src="../js/api.js"></script>
+    </form>
+    <script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+    <script src="../js/jquery-3.5.1.min.js" charset="utf-8"></script>
+    <script src="../js/lay-config.js"></script>
+    <script src="../js/api.js"></script>
 
 
-<script>
-    layui.use(['form'], function () {
-        var form = layui.form,
-            layer = layui.layer;
+    <script>
+        layui.use(['form'], function() {
+            var form = layui.form,
+                layer = layui.layer;
 
 
-	// $("#btn").on('click', function() {
-    //
-    //
-	// 			});
-        //监听提交
-        form.on('submit(saveBtn)', function (data) {
+            // $("#btn").on('click', function() {
+            //
+            //
+            // 			});
+            //监听提交
+            form.on('submit(saveBtn)', function(data) {
 
 
-            if($('input[name=pwd]').val() !== $('input[name=confirmPwd]').val()) {
-                layer.msg( '两次密码输入不一致！');
-                return false;
-            }
-
-            var data=$("form").serialize(); //输出字符串
-            // console.log($("form").serializeArray()); //输出数组
-
-            $.ajax({
-                url: apiUrl+'/user/save',
-                type: 'post',
-                dataType: 'json',
-                // data: JSON.stringify(data),
-                data: data,
-                success: function(res) {
-                    console.log(res)
-                    if(res.code==1){
-
-                        layer.msg(res.msg);
-                        return false;
-                    }
-                    if(res.code==0){
-                        // layer.msg("添加成功");
-                        // $('form')[0].reset();
-
-
-                        layer.alert("添加成功", {icon: 6}, function () {
-                            // 获得frame索引
-                            var index = parent.layer.getFrameIndex(window.name);
-                            //关闭当前frame
-                            parent.layer.close(index);
-                            //修改成功后刷新父界面
-                            window.parent.location.reload();
-                        });
-
-
-                        return false;
-                    }
+                if ($('input[name=pwd]').val() !== $('input[name=confirmPwd]').val()) {
+                    layer.msg('两次密码输入不一致！');
+                    return false;
                 }
-            })
-            return false;
-        });
 
-    });
-</script>
+                var data = $("form").serialize(); //输出字符串
+                // console.log($("form").serializeArray()); //输出数组
+
+                $.ajax({
+                    url: apiUrl + '/user/save',
+                    type: 'post',
+                    dataType: 'json',
+                    // data: JSON.stringify(data),
+                    data: data,
+                    success: function(res) {
+                        console.log(res)
+                        if (res.code == 1) {
+
+                            layer.msg(res.msg);
+                            return false;
+                        }
+                        if (res.code == 0) {
+                            // layer.msg("添加成功");
+                            // $('form')[0].reset();
+
+
+                            layer.alert("添加成功", {
+                                icon: 6
+                            }, function() {
+                                // 获得frame索引
+                                var index = parent.layer.getFrameIndex(window.name);
+                                //关闭当前frame
+                                parent.layer.close(index);
+                                //修改成功后刷新父界面
+                                window.parent.location.reload();
+                            });
+
+
+                            return false;
+                        }
+                    }
+                })
+                return false;
+            });
+
+        });
+    </script>
 </body>
+
 </html>

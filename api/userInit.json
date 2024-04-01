@@ -4,13 +4,13 @@
     "href": "../page/userDeviceList.html"
   },
   "logoInfo": {
-    "title": "物料管理",
+    "title": "设备管理",
     "image": "../images/logo.png",
     "href": ""
   },
   "menuInfo": [
     {
-      "title": "物料管理",
+      "title": "设备管理",
       "icon": "fa fa-address-book",
       "href": "",
       "target": "_self",
@@ -18,25 +18,25 @@
         {
           "title": "功能菜单",
           "href": "",
-          "icon": "fa fa-home",
+          "icon": "",
           "target": "_self",
           "child": [
             {
               "title": "设备查询",
               "href": "userDeviceList.html",
-              "icon": "fa fa-tachometer",
+              "icon": "",
               "target": "_self"
             },
             {
               "title": "已借设备",
               "href": "deviceRecord.html",
-              "icon": "fa fa-tachometer",
+              "icon": "",
               "target": "_self"
             },
             {
               "title": "修改密码",
               "href": "updatePwd.html",
-              "icon": "fa fa-tachometer",
+              "icon": "",
               "target": "_self"
             }
 
