@@ -28,7 +28,7 @@
               "target": "_self"
             },
             {
-              "title": "已借设备",
+              "title": "借还记录",
               "href": "deviceRecord.html",
               "icon": "",
               "target": "_self"

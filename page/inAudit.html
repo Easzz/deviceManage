@@ -27,12 +27,20 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label ">损毁情况</label>
+        <label class="layui-form-label ">是否损坏</label>
         <div class="layui-input-block">
-            <input type="text" id="damage" name="damage"  value="" class="layui-input">
+            <input type="radio" name="isDamage" value="0" title="未损坏" checked>
+            <input type="radio" name="isDamage" value="1" title="损坏" >
             <tip></tip>
         </div>
     </div>
+<!--    <div class="layui-form-item">-->
+<!--        <label class="layui-form-label ">损毁情况</label>-->
+<!--        <div class="layui-input-block">-->
+<!--            <input type="text" id="damageText" name="damageText"  value="" class="layui-input">-->
+<!--            <tip></tip>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div class="layui-form-item">
         <div class="layui-input-block">
@@ -74,7 +82,7 @@
             damage: $("#damage").val()
         };
 					$.ajax({
-						url: apiUrl+'/device/inAudit',
+						url: apiUrl+'/device/inAuditSingle',
 						type: 'post',
 						dataType: 'json',
 						// data: JSON.stringify(data),

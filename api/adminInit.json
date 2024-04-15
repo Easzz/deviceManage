@@ -28,8 +28,14 @@
               "target": "_self"
             },
             {
-              "title": "审核管理",
-              "href": "adminAudit.html",
+              "title": "借出审核",
+              "href": "adminOutAudit.html",
+              "icon": "",
+              "target": "_self"
+            },
+            {
+              "title": "归还审核",
+              "href": "adminInAudit.html",
               "icon": "",
               "target": "_self"
             },

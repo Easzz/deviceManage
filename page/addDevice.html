@@ -41,13 +41,29 @@
         </div>
     </div>
     <div class="layui-form-item">
-
-        <label class="layui-form-label ">损毁情况</label>
+        <label class="layui-form-label ">是否损坏</label>
         <div class="layui-input-block">
-            <input type="text" name="damage"  value="" class="layui-input">
+            <input type="radio" name="isDamage" value="0" title="未损坏" checked>
+            <input type="radio" name="isDamage" value="1" title="损坏" >
             <tip></tip>
         </div>
     </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <input type="text" name="remark" lay-reqtext="" placeholder="请输入备注" value="" class="layui-input">
+            <tip></tip>
+        </div>
+    </div>
+<!--    <div class="layui-form-item">-->
+
+<!--        <label class="layui-form-label ">损毁情况</label>-->
+<!--        <div class="layui-input-block">-->
+<!--            <input type="text" name="damage"  value="" class="layui-input">-->
+<!--            <tip></tip>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div class="layui-form-item">
         <div class="layui-input-block">
